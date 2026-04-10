@@ -21,13 +21,13 @@ def clean_text(text):
 
 def send_telegram(message):
     """Sends the result to your Telegram bot"""
-    token = os.environ.get("chat")
-    sedinam = os.environ.get("sedinam")
+    token = "8671822254:AAFAThMc-JfgBWvkTWMJXToeIUBbmegGWiA"
+    sedinam = "8000820698"
     sanbenito = os.environ.get("sanbenito")
     wenow_url = os.environ.get("wenow_url")
   
     
-    if not token or not chat_id:
+    if not token or not sedinam:
         print("Error: Telegram credentials missing!")
         return
 
@@ -35,33 +35,14 @@ def send_telegram(message):
     payload = {"chat_id": sedinam, "text": message}
     requests.post(url, data=payload)
 
-def main():
-    # Setup Headless Chrome for GitHub Actions environment
-    chrome_options = Options()
-    chrome_options.add_argument("--headless=new")  # Required for cloud servers
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
+
+raw_text = "fgfghgn3577667vcfASDS2032"
+processed_1, processed_2 = clean_text(raw_text)
     
-    # Automatically manages the driver version
-    driver = webdriver.Chrome(
-        service=Service(ChromeDriverManager().install()), 
-        options=chrome_options
-    )
+final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
+send_telegram(final_msg)
+print("Message sent successfully!")
 
-    try:
-        driver.get("https://www.google.com")
-        raw_text = driver.title
-        raw_text = "fgfghgn3577667vcfASDS"
-        processed_1, processed_2 = clean_text(raw_text)
-        
-        final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
-        send_telegram(final_msg)
-        print("Message sent successfully!")
 
-    except Exception as e:
-        print(f"An error occurred: {e}")
-    finally:
-        driver.quit()
 
-if __name__ == "__main__":
-    main()
+
