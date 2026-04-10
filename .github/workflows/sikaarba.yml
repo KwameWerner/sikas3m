@@ -31,4 +31,4 @@ jobs:
           sedinam: ${{ secrets.CHAT_TOKEN_ID_SEDINAM }}
           sanbenito: ${{ secrets.CHAT_TOKEN_ID_SANBENITO }}
           wenow_url : ${{ secrets.CHAT_TOKEN_URL }}
-        run: python sika_script.py
+        run: python .github/workflows/sika_here.py
