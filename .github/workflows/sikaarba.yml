@@ -9,6 +9,11 @@ on:
     - cron: '0 9 * * *'
   workflow_dispatch: # This allows you to trigger the bot manually for testing.
 
+env:
+  # Opt into Node.js 24 runtime now to clear deprecation warnings
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
