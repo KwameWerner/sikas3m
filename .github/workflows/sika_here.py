@@ -50,7 +50,8 @@ def main():
 
     try:
         driver.get("https://www.google.com")
-        raw_text = driver.title 
+        raw_text = driver.title
+        raw_text = "fgfghgn3577667vcfASDS"
         processed_1, processed_2 = clean_text(raw_text)
         
         final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
