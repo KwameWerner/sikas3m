@@ -6,7 +6,7 @@ name: sikanti
 on:
   schedule:
     # Runs at 9:00 AM UTC (9:00 AM GMT) daily.
-    - cron: '30 18 * * *'
+    - cron: '50 18 * * *'
   workflow_dispatch: # This allows you to trigger the bot manually for testing.
 
 env:
