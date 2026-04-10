@@ -35,13 +35,47 @@ def send_telegram(message):
     payload = {"chat_id": sedinam, "text": message}
     requests.post(url, data=payload)
 
-
-raw_text = "fgfghgn3577667vcfASDS2032"
-processed_1, processed_2 = clean_text(raw_text)
+def main():
+    # Setup Headless Chrome for GitHub Actions environment
+    chrome_options = Options()
+    chrome_options.add_argument("--headless=new")  # Required for cloud servers
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
     
-final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
-send_telegram(final_msg)
-print("Message sent successfully!")
+    # Automatically manages the driver version
+    driver = webdriver.Chrome(
+        service=Service(ChromeDriverManager().install()), 
+        options=chrome_options
+    )
+
+    try:
+        driver.get("https://www.google.com/search?q=wwe")
+        raw_text = driver.title 
+        processed_1, processed_2 = clean_text(raw_text)
+        
+        final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
+        send_telegram(final_msg)
+        print("Message sent successfully!")
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        raw_text = "fgfghgn3577667vcfASDS2032"
+        processed_1, processed_2 = clean_text(raw_text)
+        
+        final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
+        send_telegram(final_msg)
+        print("Message sent successfully!")
+    finally:
+        driver.quit()
+
+
+main()
+# raw_text = "fgfghgn3577667vcfASDS2032"
+# processed_1, processed_2 = clean_text(raw_text)
+    
+# final_msg = f"Original: {raw_text}\nNo Letters: {processed_1}\nNo Capitals: {processed_2}"
+# send_telegram(final_msg)
+# print("Message sent successfully!")
 
 # import os
 # import re
