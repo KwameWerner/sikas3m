@@ -11,6 +11,7 @@
 
 import os
 import time
+from datetime import datetime, timedelta
 import re
 import requests
 from selenium import webdriver
@@ -556,7 +557,7 @@ def get_by_grade(graded: list[dict], grade: str) -> list[dict]:
     """Filter graded matches by grade. e.g. get_by_grade(graded, 'A')"""
     results = [g for g in graded if g["grade"] == grade.upper().strip()]
     for g in results:
-    return results
+        return results
 
 
 
@@ -603,7 +604,7 @@ def send_telegram(message: str):
             except Exception as e:
                 print(f"Error: {e}")
 
-══════════════════════════════════════════════════════════════════
+# ══════════════════════════════════════════════════════════════════
 #  MAIN PIPELINE
 # ══════════════════════════════════════════════════════════════════
 
@@ -629,7 +630,7 @@ def run_grading_pipeline():
     graded = grade_all_entries(entries)
 
     # Step 4: Print full summary to console
-    print_grade_summary(graded)
+    #print_grade_summary(graded)
 
     # Step 5: Get scheduling advice for today
     advice = get_day_scheduling_advice()
