@@ -295,7 +295,7 @@ def format_top_arbs_message(graded: list[dict], advice: str) -> str:
        including the scheduling advice for the current day.
     """
     # Filter to A+, A, B only then take top 10 by score
-    priority = [g for g in graded if g["grade"] in ("A+", "A", "B")][:10]
+    priority = [g for g in graded if g["grade"] in ("A+", "A", "B")][:15]
 
     if not priority:
         return (
