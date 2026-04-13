@@ -297,6 +297,13 @@ def format_top_arbs_message(graded: list[dict], advice: str) -> str:
     # Filter to A+, A, B only then take top 10 by score
     priority = [g for g in graded if g["grade"] in ("A+", "A", "B")][:15]
 
+     # Filter to A+, A, B only, sort by percentage descending, take top 10
+    priority = sorted(
+        [g for g in graded if g["grade"] in ("A+", "A", "B", "C")],
+        key=lambda x: x["percentage"],
+        reverse=True
+    )[:15]
+
     if not priority:
         return (
             "📊 <b>ARB GRADING SCAN COMPLETE</b>\n"
@@ -315,11 +322,14 @@ def format_top_arbs_message(graded: list[dict], advice: str) -> str:
 
     for i, g in enumerate(priority, 1):
         lines.append(f"<b>{i}. {g['team1']} vs {g['team2']}</b>")
+        lines.append(f"   Market : {g['market']}")
+        lines.append(f"   Odds : {g['Odds']}")
         lines.append(f"   Grade  : {g['grade']} (Score: {g['score']})")
-        lines.append(f"   Sport  : {g['sport']} | Market: {g['market']}")
+        lines.append(f"   Sport  : {g['sport']}")
         lines.append(f"   League : {g['league']}")
         lines.append(f"   Date   : {g['date']} {g['day']} @ {g['time']}")
         lines.append(f"   Arb %  : {g['percentage']}%")
+        #lines.append(f"   Reason  : {g['reasons']}")
         lines.append("")
 
     return "\n".join(lines)
@@ -487,6 +497,44 @@ def parse_betmonitor_entries(raw_text: str) -> list[dict]:
             # Line 5: Market type
             market = lines[5] if len(lines) > 5 else ""
 
+            # Line 6: Odds
+            other_lines = lines[6:]
+            cleaned = []
+            for i in other_lines:
+                if (not ("+" in i)) and (not ("%" in i)):
+                    cleaned.append(i)
+
+            # print(cleaned)
+
+            odds = [i for i, x in enumerate(cleaned) if re.match(r'^\d+\.\d+$', x)]
+            for i in range(0, len(odds), 2):
+                a, b = float(cleaned[odds[i]]), float(cleaned[odds[i+1]])
+                cleaned[odds[i]] = str(max(a, b))
+                cleaned[odds[i+1]] = ''
+            cleaned = [x for x in cleaned if x != '']
+            # print(cleaned)
+
+            label = {
+                        "1": "Home", "2": "Away", "X": "Draw",
+                        "O": "Over", "U": "Under",
+                        "Y": "Yes",  "N": "No"
+                    }
+            for k,i in enumerate(cleaned):
+                if i in label.keys():
+                    cleaned[k] = label[i]
+
+            # print(cleaned)
+
+            cleaned = [x.replace('Highest: ', '') for x in cleaned]
+            #print(cleaned)
+            Odds = [cleaned[:3], cleaned[3:6]]
+            # print(cleaned[:3])
+            # print(cleaned[3:6])
+            last_selection = cleaned[6:]
+            if last_selection:
+                Odds.append(last_selection)
+            print(Odds)
+         
             # Percentage — scan from bottom of block
             percentage = 0.0
             for line in reversed(lines):
@@ -510,6 +558,7 @@ def parse_betmonitor_entries(raw_text: str) -> list[dict]:
                 "league":     league,
                 "team1":      team1,
                 "team2":      team2,
+                "Odds" :      Odds,
                 "market":     market,
                 "percentage": percentage,
             })
