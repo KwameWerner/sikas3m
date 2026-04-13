@@ -117,6 +117,9 @@ GRADE_A_LEAGUES = {
     "portugal honora",
     "belgium u-21",
     "egypt super cup",
+    "argentina liga di honor",
+    "ukraine tt-cup",
+    "china itf-m Anning",
 }
 
 TOP_TIER_LEAGUES = {
