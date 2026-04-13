@@ -36,4 +36,9 @@ jobs:
           sedinam: ${{ secrets.CHAT_TOKEN_ID_SEDINAM }}
           sanbenito: ${{ secrets.CHAT_TOKEN_ID_SANBENITO }}
           wenow_url : ${{ secrets.CHAT_TOKEN_URL }}
-        run: python .github/workflows/sika_here.py
+          akwan_url : ${{ secrets.AKWAN_TOKEN }}
+        run: |
+             python .github/workflows/sika_here.py
+             sleep 20
+             python .github/workflows/akwan2.py
+       
