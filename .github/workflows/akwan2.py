@@ -624,7 +624,7 @@ def scrape_betmonitor() -> str:
         options=chrome_options
     )
     driver.get(pattern_url)
-    time.sleep(5)
+    time.sleep(1)
     try:
         container = driver.find_element("css selector", ".sort-cont")
         data      = container.text
