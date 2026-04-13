@@ -39,6 +39,6 @@ jobs:
           akwan_url : ${{ secrets.AKWAN_TOKEN }}
         run: |
              python .github/workflows/sika_here.py
-             sleep 20
+             sleep 7
              python .github/workflows/akwan2.py
        
