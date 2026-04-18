@@ -22,6 +22,7 @@ token = os.environ.get("chat")
 sedinam = os.environ.get("sedinam")
 sanbenito = os.environ.get("sanbenito")
 wenow_url = os.environ.get("wenow_url")
+pers_url = "https://www.flashscore.mobi/?d=1&s=5"
 
 
 MATCH_RE  = re.compile(r'^(\d{1,2}:\d{2})(?:Cancelled|Postponed)?(.+?)\s+-\s+(.+?)\s+-:-(?:\s+\[\s*([\d.\s|]+)\s*\])?$')
@@ -39,7 +40,7 @@ def scrape() -> str:
         service=Service(ChromeDriverManager().install()), 
         options=chrome_options
     )
-    driver.get(wenow_url)
+    driver.get(pers_url)
     time.sleep(5)
     data = driver.find_element("css selector", "#score-data").text
     driver.quit()
