@@ -40,7 +40,7 @@ def scrape() -> str:
         service=Service(ChromeDriverManager().install()), 
         options=chrome_options
     )
-    driver.get(pers_url)
+    driver.get(wenow_url)
     time.sleep(5)
     data = driver.find_element("css selector", "#score-data").text
     driver.quit()
