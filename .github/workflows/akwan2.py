@@ -302,7 +302,7 @@ def format_top_arbs_message(graded: list[dict], advice: str) -> str:
 
      # Filter to A+, A, B only, sort by percentage descending, take top 10
     priority = sorted(
-        [g for g in graded if g["grade"] in ("A+", "A", "B", "C")],
+        [g for g in graded if g["grade"] in ("A+", "A")],
         key=lambda x: x["percentage"],
         reverse=True
     )[:15]
