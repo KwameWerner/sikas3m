@@ -21,6 +21,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 token = os.environ.get("chat")
 sedinam = os.environ.get("sedinam")
 sanbenito = os.environ.get("sanbenito")
+armorata = "1108420076"
 wenow_url = os.environ.get("wenow_url")
 pers_url = "https://www.flashscore.mobi/?d=1&s=5"
 
@@ -99,7 +100,7 @@ def display(grouped: dict, threshold: float) -> str:
 
 def send_telegram(message: str):
     chunks = [message[i:i+4000] for i in range(0, len(message), 4000)]
-    for id in [sanbenito, sedinam]:
+    for id in [sanbenito, sedinam, armorata]:
         url = f"https://api.telegram.org/bot{token}/sendMessage"
         for chunk in chunks:
             payload = {"chat_id": id, "text": chunk}
